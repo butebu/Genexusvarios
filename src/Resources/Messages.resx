@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AreYouSure" xml:space="preserve">
     <value>Are you sure?</value>
@@ -148,6 +148,15 @@ Are you sure you want to proceed?</value>
   <data name="InvalidDir" xml:space="preserve">
     <value>Directory '{0}' does not exist yet.
 Make sure you build your KB in this envirobnment at least once.</value>
+  </data>
+  <data name="OpenAndroidApp" xml:space="preserve">
+    <value>Explore to Android app</value>
+  </data>
+  <data name="OpeniOSApp" xml:space="preserve">
+    <value>Explore to iOS app</value>
+  </data>
+  <data name="OpenWindowsApp" xml:space="preserve">
+    <value>Explore to Windows app</value>
   </data>
   <data name="PowerCommands" xml:space="preserve">
     <value>Power Commands</value>

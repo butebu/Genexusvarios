@@ -4,6 +4,13 @@ namespace GXPowerCommands
 {
 	public class CommandKeys
 	{
+		static CommandKeys()
+		{
+			OpenWindowsAppCommand = new CommandKey(Package.guid, "OpenWindowsApp");
+			OpenAndroidAppCommand = new CommandKey(Package.guid, "OpenAndroidApp");
+			OpeniOSAppCommand = new CommandKey(Package.guid, "OpeniOSApp");
+		}
+
 		private static CommandKey helloCmd = new CommandKey(Package.guid, "HelloWorld");
 		public static CommandKey HelloCommand
 		{
@@ -70,6 +77,8 @@ namespace GXPowerCommands
 			get { return removeVariablesCmd; }
 		}
 
-
+		public static CommandKey OpenWindowsAppCommand { get; }
+		public static CommandKey OpenAndroidAppCommand { get; }
+		public static CommandKey OpeniOSAppCommand { get; }
 	}
 }

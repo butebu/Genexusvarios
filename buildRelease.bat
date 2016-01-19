@@ -1,1 +1,1 @@
-msbuild src\GXPowerCommands.csproj /p:Configuration=Release;GXpath=F:\dev\genexus\trunk\Deploy\Genexus\Debug
+msbuild src\GXPowerCommands.csproj /p:Configuration=Release;GXpath=D:\dev\genexus\trunk\Deploy\Genexus\Debug

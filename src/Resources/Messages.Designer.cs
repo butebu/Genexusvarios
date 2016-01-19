@@ -171,6 +171,39 @@ namespace GXPowerCommands.Resources
 		}
 
 		/// <summary>
+		/// Returns the System.String resource corresponding to 'Explore to Android app'
+		/// </summary>
+		public static System.String OpenAndroidApp
+		{
+			get
+			{
+				return (System.String)ResourceManager.GetString("OpenAndroidApp", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		/// Returns the System.String resource corresponding to 'Explore to iOS app'
+		/// </summary>
+		public static System.String OpeniOSApp
+		{
+			get
+			{
+				return (System.String)ResourceManager.GetString("OpeniOSApp", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		/// Returns the System.String resource corresponding to 'Explore to Windows app'
+		/// </summary>
+		public static System.String OpenWindowsApp
+		{
+			get
+			{
+				return (System.String)ResourceManager.GetString("OpenWindowsApp", resourceCulture);
+			}
+		}
+
+		/// <summary>
 		/// Returns the System.String resource corresponding to 'Power Commands'
 		/// </summary>
 		public static System.String PowerCommands

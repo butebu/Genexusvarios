@@ -6,12 +6,15 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Artech.Architecture.Common.Helpers;
 using Artech.Architecture.Common.Objects;
 using Artech.Architecture.Common.Services;
 using Artech.Architecture.UI.Framework.Controls;
 using Artech.Architecture.UI.Framework.Helper;
 using Artech.Architecture.UI.Framework.Services;
 using Artech.Common.Framework.Commands;
+using Artech.Genexus.Common;
+using Artech.Genexus.Common.Entities;
 using Artech.Genexus.Common.Parts;
 using Artech.Genexus.Common.Services;
 using Artech.Udm.Framework;
@@ -21,6 +24,10 @@ namespace GXPowerCommands
 {
 	public class CommandManager : CommandDelegator
 	{
+		readonly string WINDOWS = "Windows";
+		readonly string ANDROID = "Android";
+		readonly string IOS = "iOS";
+
 		public CommandManager()
 		{
 			AddCommand(CommandKeys.HelloCommand, ExecSayHello, QuerySayHello);
@@ -34,6 +41,10 @@ namespace GXPowerCommands
 			AddCommand(CommandKeys.RebuildRunCommand, ExecuteRebuildAndRun, QueryIsMainObjectSelected);
 			AddCommand(CommandKeys.RunAsIsCommand, ExecuteRunAsIs, QueryIsMainObjectSelected);
 			AddCommand(CommandKeys.RemoveVariablesCommand, ExecuteRemoveVariables, QueryIsObjectSelected);
+
+			AddCommand(CommandKeys.OpenWindowsAppCommand, ExecuteOpenWindowsApp, QueryOpenWindowsApp);
+			AddCommand(CommandKeys.OpenAndroidAppCommand, ExecuteOpenAndroidApp, QueryOpenAndroidApp);
+			AddCommand(CommandKeys.OpeniOSAppCommand, ExecuteOpeniOSApp, QueryOpeniOSApp);
 		}
 
 		public bool ExecSayHello(CommandData data)
@@ -46,7 +57,7 @@ namespace GXPowerCommands
 		{
 #if DEBUG
 			status.State = CommandState.Enabled;
-#else	
+#else
 			status.State = CommandState.Invisible;
 #endif
 			return true;
@@ -58,26 +69,8 @@ namespace GXPowerCommands
 			KBObject obj = null;
 			if (UIServices.KB != null && UIServices.KB.CurrentKB != null)
 			{
-				IModelTree tree = data.Context as IModelTree;
-				if (tree != null)
-				{
-					if (!(tree.SelectedObject is KBObject))
-						return true;
-
-					if (tree.SelectedObjects.Count != 1)
-						return true;
-
-					obj = tree.SelectedObject as KBObject;
-
-				}
-				else
-					obj = data.Context as KBObject;
-
-				if (obj == null || obj.Type == typeof(Folder).GUID)
+				if (!IsObjectSelected(data, false, out obj))
 					return true;
-
-				//if (!obj.GetPropertyValue<bool>("IsMain"))
-				//    return true;
 
 				data.Context = obj;
 				status.State = CommandState.Enabled;
@@ -362,25 +355,7 @@ namespace GXPowerCommands
 			KBObject obj = null;
 			if (UIServices.KB != null && UIServices.KB.CurrentKB != null)
 			{
-				IModelTree tree = data.Context as IModelTree;
-				if (tree != null)
-				{
-					if (!(tree.SelectedObject is KBObject))
-						return true;
-
-					if (tree.SelectedObjects.Count != 1)
-						return true;
-
-					obj = tree.SelectedObject as KBObject;
-
-				}
-				else
-					obj = data.Context as KBObject;
-
-				if (obj == null || obj.Type == typeof(Folder).GUID)
-					return true;
-
-				if (!obj.GetPropertyValue<bool>("IsMain"))
+				if (!IsObjectSelected(data, true, out obj))
 					return true;
 
 				data.Context = obj;
@@ -440,5 +415,121 @@ namespace GXPowerCommands
 
 			return true;
 		}
+
+		private bool ExecuteOpenWindowsApp(CommandData cmdData)
+		{
+			KBObject obj = cmdData.Context as KBObject;
+			if (obj == null)
+				return true;
+
+			ExecuteExplorer(GetObjectPath(obj, WINDOWS));
+
+			return true;
+		}
+
+		private bool QueryOpenWindowsApp(CommandData cmdData, ref CommandStatus status)
+		{
+			if (UIServices.KB != null && UIServices.KB.CurrentKB != null)
+			{
+				KBObject obj;
+				if (!IsObjectSelected(cmdData, true, out obj))
+					return true;
+
+				if (IsOkToShow(obj, Properties.SMARTDEVICE.GenerateWindows))
+				{
+					cmdData.Context = obj;
+					status.State = CommandState.Enabled;
+				}
+			}
+			return true;
+		}
+
+		private bool ExecuteOpenAndroidApp(CommandData cmdData)
+		{
+			KBObject obj = cmdData.Context as KBObject;
+			if (obj == null)
+				return true;
+
+			ExecuteExplorer(GetObjectPath(obj, ANDROID));
+
+			return true;
+		}
+
+		private bool QueryOpenAndroidApp(CommandData cmdData, ref CommandStatus status)
+		{
+			if (UIServices.KB != null && UIServices.KB.CurrentKB != null)
+			{
+				KBObject obj;
+				if (!IsObjectSelected(cmdData, true, out obj))
+					return true;
+
+				if (IsOkToShow(obj, Properties.SMARTDEVICE.GenerateAndroid))
+				{
+					cmdData.Context = obj;
+					status.State = CommandState.Enabled;
+				}
+			}
+			return true;
+		}
+
+		private bool ExecuteOpeniOSApp(CommandData cmdData)
+		{
+			KBObject obj = cmdData.Context as KBObject;
+			if (obj == null)
+				return true;
+
+			ExecuteExplorer(GetObjectPath(obj, IOS));
+
+			return true;
+		}
+
+		private bool QueryOpeniOSApp(CommandData cmdData, ref CommandStatus status)
+		{
+			if (UIServices.KB != null && UIServices.KB.CurrentKB != null)
+			{
+				KBObject obj;
+				if (!IsObjectSelected(cmdData, true, out obj))
+					return true;
+
+				if (IsOkToShow(obj, Properties.SMARTDEVICE.GenerateIos))
+				{
+					cmdData.Context = obj;
+					status.State = CommandState.Enabled;
+				}
+			}
+			return true;
+		}
+
+		bool IsOkToShow(KBObject obj, string generator)
+		{
+			if (obj == null)
+				return false;
+
+			if (obj.Type != ObjClass.SDPanel && obj.Type != ObjClass.Dashboard)
+				return false;
+
+			GxEnvironment environment = UIServices.KB.WorkingEnvironment.TargetModel.GetAs<GxModel>().Environments.FirstOrDefault(env => env.Generator == (int)GeneratorType.SmartDevices);
+
+			return environment != null && environment.Properties.GetPropertyValue<bool>(generator);
+		}
+
+		bool IsObjectSelected(CommandData data, bool mustBeMain, out KBObject obj)
+		{
+			obj = null;
+			if (data.Context == null)
+				return false;
+
+			obj = KBObjectSelectionHelper.TryGetOnlyOneKBObjectFrom(data.Context);
+			if (obj != null && mustBeMain)
+				return obj.GetPropertyValue<bool>("IsMain");
+
+			return true;
+		}
+
+		string GetObjectPath(KBObject obj, string platform)
+		{
+			return Path.Combine(Path.Combine(Path.Combine(Path.Combine(UIServices.KB.CurrentKB.Location, UIServices.KB.CurrentModel.Environment.TargetModel.TargetPath), "mobile"), platform), obj.Name);
+		}
 	}
+
 }

@@ -33,7 +33,7 @@ using Artech.Architecture.Common.Packages;
 // [assembly: AssemblyVersion("1.0.*")]
 
 #if SALTO
-[assembly: AssemblyVersion("4.0.0.*")]
+[assembly: AssemblyVersion("4.2.0.*")]
 [assembly: PackageCompatibility(Version = 96639)]
 #else
 [assembly: AssemblyVersion("3.0.0.*")]

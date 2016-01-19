@@ -17,6 +17,9 @@
 		<CommandDefinition id='RebuildRun' context='selection' resourceId='RebuildRun' imageType='ico' image='build_run'/>
 		<CommandDefinition id='RunAsIs' context='selection' resourceId='RunAsIs' imageType='ico' image='play'/>
 		<CommandDefinition id='RemoveVariables' context='selection' resourceId='RemoveVariables' imageType='ico' image='clean'/>
+		<CommandDefinition id='OpenWindowsApp' context='selection' resourceId='OpenWindowsApp' imageType='ico' image='windows_app'/>
+		<CommandDefinition id='OpenAndroidApp' context='selection' resourceId='OpenAndroidApp' imageType='ico' image='android_app'/>
+		<CommandDefinition id='OpeniOSApp' context='selection' resourceId='OpeniOSApp' imageType='ico' image='ios_app'/>
 	</Commands>
 
 	<Groups>
@@ -29,6 +32,9 @@
 				<Command refid='RebuildRun' initVisible='true'/>
 				<Command refid='RunAsIs' initVisible='true'/>
 				<Command refid='RemoveVariables' initVisible='true'/>
+				<Command refid='OpenWindowsApp' initVisible='true'/>
+				<Command refid='OpenAndroidApp' initVisible='true'/>
+				<Command refid='OpeniOSApp' initVisible='true'/>
 			</Popup>
 		</Group>
 	</Groups>
