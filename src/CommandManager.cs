@@ -528,7 +528,7 @@ namespace GXPowerCommands
 
 		string GetObjectPath(KBObject obj, string platform)
 		{
-			return Path.Combine(Path.Combine(Path.Combine(Path.Combine(UIServices.KB.CurrentKB.Location, UIServices.KB.CurrentModel.Environment.TargetModel.TargetPath), "mobile"), platform), obj.Name);
+			return Path.Combine(Path.Combine(Path.Combine(Path.Combine(UIServices.KB.CurrentKB.Location, UIServices.KB.CurrentModel.Environment.TargetModel.TargetPath), "mobile"), platform), obj.QualifiedName.ToString().Replace(".","_"));
 		}
 	}
 
