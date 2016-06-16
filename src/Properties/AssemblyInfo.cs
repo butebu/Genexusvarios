@@ -7,11 +7,11 @@ using Artech.Architecture.Common.Packages;
 // associated with an assembly.
 [assembly: AssemblyTitle("Power commands for common Genexus tasks")]
 [assembly: AssemblyDescription("Power commands for common Genexus tasks")]
-[assembly: AssemblyConfiguration("Just copy the assembly under the Packages folder of your Genexus installation")]
+[assembly: AssemblyConfiguration("Just copy the assembly under the Packages folder of your GeneXus installation")]
 [assembly: AssemblyCompany("@sebagomez")]
-[assembly: AssemblyProduct("GXPowerCommands")]
+[assembly: AssemblyProduct("GeneXus Power Commands")]
 [assembly: AssemblyCopyright("Copyright © @sebagomez 2011 - 2016")]
-[assembly: AssemblyTrademark("™ GXpowerCommands is an unregistered trademark of @sebagomez")]
+[assembly: AssemblyTrademark("™ GeneXus Power Commands is an unregistered trademark of @sebagomez")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -34,7 +34,7 @@ using Artech.Architecture.Common.Packages;
 
 #if SALTO
 [assembly: AssemblyVersion("4.2.0.*")]
-[assembly: PackageCompatibility(Version = 96639)]
+[assembly: PackageCompatibility(Version = 96640)]
 #else
 [assembly: AssemblyVersion("3.0.0.*")]
 [assembly: PackageCompatibility(Version = 86463)]
